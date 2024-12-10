@@ -14,8 +14,11 @@ public class PlayerController : MonoBehaviour
     private bool isOnSpot = false;
     private string currentSpotTag = "";
 
+    private GameManager gameManager;
+
     void Start()
     {
+        gameManager = GameManager.Instance;
 
         animator = GetComponent<Animator>();
 
@@ -28,6 +31,10 @@ public class PlayerController : MonoBehaviour
         ProcessInputs();
         AnimateMovement();
 
+         if (Input.GetKeyDown(KeyCode.Return))
+        {
+            CheckPlotInteraction();
+        }
       
     }
 
@@ -104,13 +111,32 @@ public class PlayerController : MonoBehaviour
     void ShowDialog(string spotTag)
     {
         dialogBox.SetActive(true);
-        else if (spotTag == "Plot")
+        if (spotTag == "Plot")
         {
             dialogText.text = "Press Enter to plant or harvest";
         }
     }
 
+    void CheckPlotInteraction()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 0.1f);
 
+        foreach (var hitCollider in hitColliders)
+        {
+            Plot plot = hitCollider.GetComponent<Plot>();
+            if (plot != null)
+            {
+                if (plot.Harvest())
+                {
+                    gameManager.CollectFruit(); // Collect the fruit or vegetable
+                }
+                else
+                {
+                    plot.PlantSeed(); // Plant a seed
+                }
+            }
+        }
+    }
 
 
 
