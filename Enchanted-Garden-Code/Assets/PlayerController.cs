@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,10 +8,18 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Vector2 movement;
 
+    public GameObject dialogBox;
+    public TextMeshProUGUI dialogText;
+
+    private bool isOnSpot = false;
+    private string currentSpotTag = "";
+
     void Start()
     {
 
         animator = GetComponent<Animator>();
+
+        dialogBox.SetActive(false);
 
     }
 
@@ -70,9 +80,35 @@ public class PlayerController : MonoBehaviour
         transform.position = newPosition;
     }
 
+     void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Plot"))
+        {
+            isOnSpot = true;
+            currentSpotTag =  other.CompareTag("Plot") ? "Plot" : "";
+            ShowDialog(currentSpotTag);
+        }
+        
+    }
 
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Plot"))
+        {
+            isOnSpot = false;
+            currentSpotTag = "";
+            dialogBox.SetActive(false);
+        }
+    }
 
-  
+    void ShowDialog(string spotTag)
+    {
+        dialogBox.SetActive(true);
+        else if (spotTag == "Plot")
+        {
+            dialogText.text = "Press Enter to plant or harvest";
+        }
+    }
 
 
 
