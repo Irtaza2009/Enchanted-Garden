@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +17,18 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Update()
     {
         UpdateUI();
@@ -22,7 +36,7 @@ public class GameManager : MonoBehaviour
     public void CollectFruit()
     {
         fruitCount++;
-        SaveGameState();
+
     }
 
     void UpdateUI()

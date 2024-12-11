@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private bool isOnSpot = false;
     private string currentSpotTag = "";
 
+    private string playerDirection = "Down";
+
     private GameManager gameManager;
 
     void Start()
@@ -60,24 +62,43 @@ public class PlayerController : MonoBehaviour
             if (movement.x > 0)
             {
                 animator.Play("WorkerRight");
+                playerDirection = "Right";
             }
             else if (movement.x < 0)
             {
                 animator.Play("WorkerLeft");
+                playerDirection = "Left";
             }
             else if (movement.y > 0)
             {
                 animator.Play("WorkerUp");
+                playerDirection = "Up";
             }
             else if (movement.y < 0)
             {
                 animator.Play("WorkerDown");
+                playerDirection = "Down";
             }
         }
         else
         {
             animator.SetBool("isMoving", false);
+            if (playerDirection == "Right")
+            {
+                animator.Play("WorkerIdleRight");
+            }
+            else if (playerDirection == "Left")
+            {
+                animator.Play("WorkerIdleLeft");
+            }
+            else if (playerDirection == "Up")
+            {
+                animator.Play("WorkerIdleUp");
+            }
+            else if (playerDirection == "Down")
+            {
             animator.Play("WorkerIdle");
+            }
         }
     }
 
@@ -94,13 +115,23 @@ public class PlayerController : MonoBehaviour
             isOnSpot = true;
             currentSpotTag =  other.CompareTag("Plot") ? "Plot" : "";
             ShowDialog(currentSpotTag);
+        } else if (other.CompareTag("ElixirSpot"))
+        {
+            isOnSpot = true;
+            currentSpotTag = "ElixirSpot";
+            ShowDialog(currentSpotTag);
+        } else if (other.CompareTag("PlotW"))
+        {
+            isOnSpot = true;
+            currentSpotTag = "PlotW";
+            ShowDialog(currentSpotTag);
         }
         
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Plot"))
+        if (other.CompareTag("Plot") || other.CompareTag("ElixirSpot") || other.CompareTag("PlotW"))
         {
             isOnSpot = false;
             currentSpotTag = "";
@@ -114,6 +145,12 @@ public class PlayerController : MonoBehaviour
         if (spotTag == "Plot")
         {
             dialogText.text = "Press Enter to plant or harvest";
+        } else if (spotTag == "ElixirSpot")
+        {
+            dialogText.text = "Press Enter to collect the elixir";
+        } else if (spotTag == "PlotW")
+        {
+            dialogText.text = "Press Enter to water the plant";
         }
     }
 
@@ -130,9 +167,14 @@ public class PlayerController : MonoBehaviour
                 {
                     gameManager.CollectFruit(); // Collect the fruit or vegetable
                 }
+                else if (plot.WaterPlant())
+                {
+                    Debug.Log("Watering plant");
+                }
                 else
                 {
                     plot.PlantSeed(); // Plant a seed
+                    Debug.Log("Planting seed");
                 }
             }
         }
