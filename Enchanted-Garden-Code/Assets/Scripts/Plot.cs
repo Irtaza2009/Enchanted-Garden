@@ -36,8 +36,12 @@ public class Plot : MonoBehaviour
     {
         if (isWaterable)
         {
-            StartCoroutine(GrowPlant2());
-            return true;
+            if (gameManager.WaterPlant())
+            {
+                StartCoroutine(GrowPlant2());
+                return true;
+            }
+            
         }
         return false;
     }
@@ -65,6 +69,7 @@ public class Plot : MonoBehaviour
 
  private IEnumerator GrowPlant2()
     {
+        StartCoroutine(WateringFalse());
 
 
         if (gameManager.fruitType == "Wheat")
@@ -80,6 +85,12 @@ public class Plot : MonoBehaviour
         isHarvestable = true;
         isWaterable = false;
         gameObject.tag = "Plot";
+    }
+
+    private IEnumerator WateringFalse ()
+    {
+        yield return new WaitForSeconds(2f);
+        gameManager.isWateringAnim = false;
     }
 
 

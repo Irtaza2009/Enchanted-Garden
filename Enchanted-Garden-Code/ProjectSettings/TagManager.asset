@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plot
   - ElixirSpot
+  - PlotW
   layers:
   - Default
   - TransparentFX

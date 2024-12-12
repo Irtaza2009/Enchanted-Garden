@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class PlayerController : MonoBehaviour
     private string playerDirection = "Down";
 
     private GameManager gameManager;
+
+    public string playerState = "None";
+
+    [SerializeField]
+    private Button[] buttons;
 
     void Start()
     {
@@ -37,12 +43,69 @@ public class PlayerController : MonoBehaviour
         {
             CheckPlotInteraction();
         }
+
+        ManageState();
+        
       
+    }
+
+    private void ManageState()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ToPlantState();
+            SetAllButtonsInteractable();
+            buttons[0].interactable = false;
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ToWateringState();
+            SetAllButtonsInteractable();
+            buttons[1].interactable = false;
+        }
+    }
+
+    private void ToPlantState()
+    {
+        playerState = "Plant";
+    }
+
+    private void ToWateringState()
+    {
+        playerState = "Watering";
+    }
+
+    public void SetAllButtonsInteractable()
+    {
+        foreach (Button button in buttons)
+        {
+            button.interactable = true;
+        }
+    }
+
+    public void StateButtonHandler(Button clickedButton)
+    {
+        Debug.Log(clickedButton.name);
+        SetAllButtonsInteractable();
+
+        clickedButton.interactable = false;
+
+        if (clickedButton.name == "WateringCan")
+        {
+            ToWateringState();
+        } else if (clickedButton.name == "PlantButton")
+        {
+            ToPlantState();
+        }
     }
 
     void FixedUpdate()
     {
-        Move();
+        if (!gameManager.isWateringAnim)
+        {
+            Move();
+        }
     }
 
     void ProcessInputs()
@@ -53,11 +116,26 @@ public class PlayerController : MonoBehaviour
 
     void AnimateMovement()
     {
-        if (movement != Vector2.zero)
+        if (gameManager.isWateringAnim)
         {
-            animator.SetFloat("Horizontal", movement.x);
-            animator.SetFloat("Vertical", movement.y);
-            animator.SetBool("isMoving", true);
+            if (playerDirection == "Right")
+            {
+                animator.Play("WateringRight");
+            } else if (playerDirection == "Left")
+            {
+                animator.Play("WateringLeft");
+            } else if (playerDirection == "Up")
+            {
+                animator.Play("WateringUp");
+            } else if (playerDirection == "Down")
+            {
+                animator.Play("WateringDown");
+            }
+        }
+        
+        else if (movement != Vector2.zero)
+        {
+           
 
             if (movement.x > 0)
             {
@@ -82,7 +160,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            animator.SetBool("isMoving", false);
+
             if (playerDirection == "Right")
             {
                 animator.Play("WorkerIdleRight");
@@ -167,15 +245,24 @@ public class PlayerController : MonoBehaviour
                 {
                     gameManager.CollectFruit(); // Collect the fruit or vegetable
                 }
-                else if (plot.WaterPlant())
+                else if (playerState == "Watering")
                 {
-                    Debug.Log("Watering plant");
+                    if (plot.WaterPlant())
+                    {
+
+                        gameManager.isWateringAnim = true;
+                    }
                 }
                 else
                 {
                     plot.PlantSeed(); // Plant a seed
                     Debug.Log("Planting seed");
                 }
+            } else if (hitCollider.CompareTag("ElixirSpot"))
+            {
+                gameManager.CollectWater();
+                Debug.Log("Collecting water");
+                Debug.Log(gameManager.waterCount);
             }
         }
     }

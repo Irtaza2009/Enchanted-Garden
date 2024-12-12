@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
 
     public int fruitCount;
+
+    public int waterCount;
      public TextMeshProUGUI fruitText;
 
       public string fruitType = "Wheat";
@@ -16,6 +18,8 @@ public class GameManager : MonoBehaviour
     public Button fruitButton;
 
     public static GameManager Instance;
+
+    public bool isWateringAnim = false;
 
     void Awake()
     {
@@ -39,6 +43,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void CollectWater()
+    {
+        waterCount++;
+    }
+
     void UpdateUI()
     {
          if (fruitText != null) fruitText.text = fruitCount.ToString();
@@ -58,6 +67,16 @@ public class GameManager : MonoBehaviour
             wheatButton.interactable = false;  // Disable the button to indicate it's selected
             fruitButton.interactable = true;   // Enable the other button
         }
+    }
+
+    public bool WaterPlant()
+    {
+        if (waterCount > 0)
+        {
+            waterCount--;
+            return true;
+        }
+        return false;
     }
     
 }
