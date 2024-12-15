@@ -7,6 +7,7 @@ TagManager:
   - Plot
   - ElixirSpot
   - PlotW
+  - Mushroom
   layers:
   - Default
   - TransparentFX

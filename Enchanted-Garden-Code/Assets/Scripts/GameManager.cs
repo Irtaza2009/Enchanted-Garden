@@ -27,9 +27,11 @@ public class GameManager : MonoBehaviour
     public int fruitCount;
 
     public int waterCount;
+    public int mushroomCount;
      public TextMeshProUGUI fruitText;
-
+    public TextMeshProUGUI mushroomText;
      public TextMeshProUGUI buyLandText;
+     public TextMeshProUGUI waterText;
 
       public string fruitType = "Wheat";
 
@@ -72,6 +74,8 @@ public class GameManager : MonoBehaviour
     void UpdateUI()
     {
         if (fruitText != null) fruitText.text = fruitCount.ToString();
+        if (mushroomText != null) mushroomText.text = mushroomCount.ToString();
+        if (waterText != null) waterText.text = waterCount.ToString();
         if (buyLandText != null) buyLandText.text = "Buy Land (" + oreCost + " Ore)";
     }
 
