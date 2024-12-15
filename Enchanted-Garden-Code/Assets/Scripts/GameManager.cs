@@ -21,15 +21,21 @@ public class GameManager : MonoBehaviour
 
     public Transform Grid;
 
+        public int oreCost = 10;
+    public int oreCount;
+
     public int fruitCount;
 
     public int waterCount;
      public TextMeshProUGUI fruitText;
 
+     public TextMeshProUGUI buyLandText;
+
       public string fruitType = "Wheat";
 
        public Button wheatButton;
     public Button fruitButton;
+
 
     public static GameManager Instance;
 
@@ -45,7 +51,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        ExpandLength();
+       
     }
 
     void Update()
@@ -65,7 +71,8 @@ public class GameManager : MonoBehaviour
 
     void UpdateUI()
     {
-         if (fruitText != null) fruitText.text = fruitCount.ToString();
+        if (fruitText != null) fruitText.text = fruitCount.ToString();
+        if (buyLandText != null) buyLandText.text = "Buy Land (" + oreCost + " Ore)";
     }
 
      public void FruitSwitch()
@@ -92,6 +99,17 @@ public class GameManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void BuyLand()
+    {
+        if (oreCount >= oreCost)
+        {   
+            oreCount -= oreCost;
+            oreCost = oreCost * 2;
+           
+            ExpandLength();
+        }
     }
 
     public void ExpandLength()
