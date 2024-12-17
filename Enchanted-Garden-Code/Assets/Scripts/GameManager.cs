@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
         if (oreCount >= oreCost)
         {   
             oreCount -= oreCost;
-            oreCost = oreCost * 2;
+            oreCost = oreCost * 10;
            
             ExpandLength();
         }
