@@ -19,7 +19,31 @@ public class FireHandler : MonoBehaviour
         }
     }
 
-    
+    void Update()
+
+    {
+
+        // Automatically manage fire state based on the isDay global variable
+
+        if (!DayNightCycle.isDay && !isFireActive)
+
+        {
+
+            StartFire();
+
+        }
+
+        else if (DayNightCycle.isDay && isFireActive)
+
+        {
+
+            EndFire();
+
+        }
+
+    }
+
+
     // Starts the fire by triggering the fire start animation.
 
     public void StartFire()
@@ -53,6 +77,7 @@ public class FireHandler : MonoBehaviour
             isFireActive = false;
 
             animator.Play("FireEnd"); // Trigger the fire end animation
+
         }
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+
 public class DayNightCycle : MonoBehaviour
 {
     public Light2D globalLight; // Reference to the Global Light 2D
@@ -8,7 +9,7 @@ public class DayNightCycle : MonoBehaviour
     public float cycleDuration = 30f; // Total duration of a full cycle (in seconds)
 
     private float cycleTimer = 0f; // Timer to track the cycle progress
-    private bool isDay = true; // Is it currently day?
+    public static bool isDay = true; // Global variable to track day or night
 
     void Start()
     {
@@ -30,6 +31,13 @@ public class DayNightCycle : MonoBehaviour
 
         // Lerp between day and night colors
         globalLight.color = Color.Lerp(dayColor, nightColor, t);
+
+        // Update the isDay variable
+        bool newIsDay = t < 0.5f;
+        if (newIsDay != isDay)
+        {
+            isDay = newIsDay;
+        }
 
         // Reset the cycle timer after a full cycle
         if (cycleTimer > cycleDuration)
