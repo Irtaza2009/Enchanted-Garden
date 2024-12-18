@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private GameManager gameManager;
 
-    public string playerState = "None";
+    public string playerState = "Harvesting";
 
     [SerializeField]
     private Button[] buttons;
@@ -45,6 +45,11 @@ public class PlayerController : MonoBehaviour
         }
 
         ManageState();
+
+        if (isOnSpot && !string.IsNullOrEmpty(currentSpotTag))
+        {
+            ShowDialog(currentSpotTag); // Continuously update dialog text
+        }
         
       
     }
@@ -53,7 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            ToPlantState();
+            ToHarvestingState();
             SetAllButtonsInteractable();
             buttons[0].interactable = false;
 
@@ -66,9 +71,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ToPlantState()
+    private void ToHarvestingState()
     {
-        playerState = "Plant";
+        playerState = "Harvesting";
     }
 
     private void ToWateringState()
@@ -94,15 +99,15 @@ public class PlayerController : MonoBehaviour
         if (clickedButton.name == "WateringCan")
         {
             ToWateringState();
-        } else if (clickedButton.name == "PlantButton")
+        } else if (clickedButton.name == "Axe")
         {
-            ToPlantState();
+            ToHarvestingState();
         }
     }
 
     void FixedUpdate()
     {
-        if (!gameManager.isWateringAnim)
+        if (!gameManager.isWateringAnim || !gameManager.isHarvestingAnim)
         {
             Move();
         }
@@ -130,6 +135,24 @@ public class PlayerController : MonoBehaviour
             } else if (playerDirection == "Down")
             {
                 animator.Play("WateringDown");
+            }
+        } else if (gameManager.isHarvestingAnim)
+        {
+            if (playerDirection == "Right")
+            {
+                animator.Play("HarvestingRight");
+            }
+            else if (playerDirection == "Left")
+            {
+                animator.Play("HarvestingLeft");
+            }
+            else if (playerDirection == "Up")
+            {
+                animator.Play("HarvestingUp");
+            }
+            else if (playerDirection == "Down")
+            {
+                animator.Play("HarvestingDown");
             }
         }
         
@@ -220,17 +243,48 @@ public class PlayerController : MonoBehaviour
     void ShowDialog(string spotTag)
     {
         dialogBox.SetActive(true);
+
+        bool isTouchDevice = Input.touchSupported;
+
         if (spotTag == "Plot")
         {
-            dialogText.text = "Press Enter to plant or harvest";
-        } else if (spotTag == "ElixirSpot")
+            if (playerState == "Harvesting")
+            {
+                dialogText.text = isTouchDevice 
+                    ? "Tap the button to plant or harvest" 
+                    : "Press Enter to plant or harvest";
+            }
+            else
+            {
+                dialogText.text = isTouchDevice 
+                    ? "Switch to harvesting/planting by tapping the button" 
+                    : "Switch to harvesting/planting by pressing 1";
+            }
+        }
+        else if (spotTag == "PlotW")
         {
-            dialogText.text = "Press Enter to collect the elixir";
-        } else if (spotTag == "PlotW")
+            if (playerState == "Watering")
+            {
+                dialogText.text = isTouchDevice 
+                    ? "Tap the button to water the plant" 
+                    : "Press Enter to water the plant";
+            }
+            else
+            {
+                dialogText.text = isTouchDevice 
+                    ? "Switch to watering by tapping the button" 
+                    : "Switch to watering by pressing 2";
+            }
+        }
+        else if (spotTag == "ElixirSpot")
         {
-            dialogText.text = "Press Enter to water the plant";
+            dialogText.text = isTouchDevice 
+                ? "Tap the button to collect the elixir" 
+                : "Press Enter to collect the elixir";
         }
     }
+
+
 
     void CheckPlotInteraction()
     {
@@ -241,9 +295,19 @@ public class PlayerController : MonoBehaviour
             Plot plot = hitCollider.GetComponent<Plot>();
             if (plot != null)
             {
-                if (plot.Harvest())
+                if (playerState == "Harvesting")
                 {
-                    gameManager.CollectFruit(); // Collect the fruit or vegetable
+                    Debug.Log("Harvesting");
+                    if (plot.Harvest())
+                    {
+                        gameManager.isHarvestingAnim = true;
+                        gameManager.CollectFruit(); // Collect the fruit or vegetable
+                    } 
+                    else
+                    {
+                        plot.PlantSeed(); // Plant a seed
+                        Debug.Log("Planting seed");
+                    }
                 }
                 else if (playerState == "Watering")
                 {
@@ -253,11 +317,7 @@ public class PlayerController : MonoBehaviour
                         gameManager.isWateringAnim = true;
                     }
                 }
-                else
-                {
-                    plot.PlantSeed(); // Plant a seed
-                    Debug.Log("Planting seed");
-                }
+               
             } else if (hitCollider.CompareTag("ElixirSpot"))
             {
                 gameManager.CollectWater();

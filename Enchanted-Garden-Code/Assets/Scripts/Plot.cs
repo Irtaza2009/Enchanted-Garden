@@ -92,12 +92,18 @@ public class Plot : MonoBehaviour
         yield return new WaitForSeconds(2f);
         gameManager.isWateringAnim = false;
     }
-
+    
+    private IEnumerator HarvestingFalse ()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameManager.isHarvestingAnim = false;
+    }
 
     public bool Harvest()
     {
         if (isHarvestable)
         {
+             StartCoroutine(HarvestingFalse());
          //   FindObjectOfType<AudioManager>().Play("Harvest");
             animator.Play("PlotIdle"); // Optional: play a harvest animation or reset to idle
             isPlanted = false;

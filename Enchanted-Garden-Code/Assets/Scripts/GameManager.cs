@@ -8,6 +8,13 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
 
+    // TODO
+    // joystick
+    // workers
+    // fix land upgrade
+    // add variety of fruits
+    // add fairies flying randomly
+
     public Tilemap leftFenceTilemap; // Reference to the left fence tilemap
     public Tilemap topFenceTilemap;  // Reference to the top fence tilemap
 
@@ -42,6 +49,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public bool isWateringAnim = false;
+    public bool isHarvestingAnim = false;
 
     void Awake()
     {
