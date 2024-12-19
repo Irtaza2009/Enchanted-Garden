@@ -23,6 +23,20 @@ public class PlayerController : MonoBehaviour
 
     public string playerState = "Harvesting";
 
+    // Adding references to the buttons
+    [SerializeField]
+    private GameObject plantHarvestButton;
+
+    [SerializeField]
+    private GameObject waterCollectButton;
+
+    [SerializeField]
+    private GameObject waterButton;
+
+    private bool canPlantHarvest = false;
+    private bool canWaterCollect = false;
+    private bool canWater = false;
+
     [SerializeField]
     private Button[] buttons;
 
@@ -33,6 +47,10 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         dialogBox.SetActive(false);
+
+        // Hide buttons initially
+        plantHarvestButton.SetActive(false);
+        waterCollectButton.SetActive(false);
 
         if (Input.touchSupported)
         {
@@ -63,9 +81,13 @@ public class PlayerController : MonoBehaviour
         {
             ShowDialog(currentSpotTag); // Continuously update dialog text
         }
+
+        UpdateButtonStates();
         
       
     }
+
+
 
     private void ManageState()
     {
@@ -261,16 +283,19 @@ public class PlayerController : MonoBehaviour
             isOnSpot = true;
             currentSpotTag =  other.CompareTag("Plot") ? "Plot" : "";
             ShowDialog(currentSpotTag);
+            canPlantHarvest = true;
         } else if (other.CompareTag("ElixirSpot"))
         {
             isOnSpot = true;
             currentSpotTag = "ElixirSpot";
             ShowDialog(currentSpotTag);
+            canWaterCollect = true;
         } else if (other.CompareTag("PlotW"))
         {
             isOnSpot = true;
             currentSpotTag = "PlotW";
             ShowDialog(currentSpotTag);
+            canWater = true;
         }
         
     }
@@ -282,6 +307,9 @@ public class PlayerController : MonoBehaviour
             isOnSpot = false;
             currentSpotTag = "";
             dialogBox.SetActive(false);
+            // Reseting interactivity when leaving the plot
+            canPlantHarvest = false;
+            canWaterCollect = false;
         }
     }
 
@@ -371,6 +399,80 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    public void OnPlantHarvestButtonClick()
+    {
+        if (canPlantHarvest)
+        {
+            CheckPlotInteraction();
+            // Plant or harvest logic
+            Debug.Log("Planting/Harvesting crops");
+
+        }
+    }
+
+    public void OnWaterCollectButtonClick()
+    {
+        if (canWaterCollect)
+        {
+            CheckPlotInteraction();
+            // Water or collect elixir logic
+            Debug.Log("Collecting elixir");
+        }
+    }
+
+    public void OnWateringButtonClick()
+    {
+        if (canWater)
+        {
+            CheckPlotInteraction();
+            // Water or collect elixir logic
+            Debug.Log("Watering plants");
+        }
+    }
+
+        // Method to update button visibility and interactivity
+    void UpdateButtonStates()
+    {
+        if (canPlantHarvest && playerState == "Harvesting")
+        {
+            plantHarvestButton.SetActive(true);
+            plantHarvestButton.GetComponent<Button>().interactable = true;
+        }
+        else 
+        {
+            plantHarvestButton.GetComponent<Button>().interactable = false;
+        }
+
+        if (canWaterCollect )
+        {
+            waterCollectButton.SetActive(true);
+            waterCollectButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            waterCollectButton.GetComponent<Button>().interactable = false;
+        }
+
+        if (canWater && playerState == "Watering")
+        {
+            waterButton.SetActive(true);
+            waterButton.GetComponent<Button>().interactable = true;
+        }
+        else 
+        {
+            waterButton.GetComponent<Button>().interactable = false;
+        }
+
+        // Hide buttons if the player is not near any plot
+        if (!canPlantHarvest && !canWaterCollect && !canWater)
+        {
+            plantHarvestButton.SetActive(false);
+            waterCollectButton.SetActive(false);
+            waterButton.SetActive(false);
+        }
+    }
+
 
 
 

@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
 
     // TODO
     // mobile controls for collecting water and planting/harvesting
-    // joystick
     // workers
     // add variety of fruits
     // add fairies flying randomly
