@@ -6,7 +6,7 @@ public class DayNightCycle : MonoBehaviour
     public Light2D globalLight; // Reference to the Global Light 2D
     public Color dayColor = new Color(1f, 1f, 1f, 1f); // Bright light for day
     public Color nightColor = new Color(0.1f, 0.1f, 0.2f, 1f); // Dim light for night
-    public float cycleDuration = 30f; // Total duration of a full cycle (in seconds)
+    public float cycleDuration = 120f; // Total duration of a full cycle (in seconds)
 
     private float cycleTimer = 0f; // Timer to track the cycle progress
     public static bool isDay = true; // Global variable to track day or night

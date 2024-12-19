@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     // TODO
     // joystick
     // workers
-    // fix land upgrade
     // add variety of fruits
     // add fairies flying randomly
 
@@ -28,7 +27,8 @@ public class GameManager : MonoBehaviour
 
     public Transform Grid;
 
-        public int oreCost = 10;
+        public int landCost = 10;
+        public int landSize = 1;
     public int oreCount;
 
     public int fruitCount;
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         if (fruitText != null) fruitText.text = fruitCount.ToString();
         if (mushroomText != null) mushroomText.text = mushroomCount.ToString();
         if (waterText != null) waterText.text = waterCount.ToString();
-        if (buyLandText != null) buyLandText.text = "Buy Land (" + oreCost + " Ore)";
+        if (buyLandText != null) buyLandText.text = "Buy Land (" + landCost + " Ore)";
     }
 
      public void FruitSwitch()
@@ -115,12 +115,13 @@ public class GameManager : MonoBehaviour
 
     public void BuyLand()
     {
-        if (oreCount >= oreCost)
+        if (oreCount >= landCost)
         {   
-            oreCount -= oreCost;
-            oreCost = oreCost * 10;
+            oreCount -= landCost;
+            landCost = landCost * 10;
            
             ExpandLength();
+            landSize++;
         }
     }
 
@@ -137,7 +138,7 @@ public class GameManager : MonoBehaviour
         if (topFenceTilemap != null)
         {
             Vector3 topFencePosition = topFenceTilemap.transform.position;
-            GameObject newTopFence = Instantiate(topFenceTilemapPrefab, new Vector3(topFencePosition.x - 4, topFencePosition.y, topFencePosition.z), Quaternion.identity);
+            GameObject newTopFence = Instantiate(topFenceTilemapPrefab, new Vector3(topFencePosition.x - (landSize * 4), topFencePosition.y, topFencePosition.z), Quaternion.identity);
             newTopFence.transform.SetParent(Grid);
             newTopFence.name = "Top&BottomFence (Duplicate)";
         }
@@ -145,14 +146,14 @@ public class GameManager : MonoBehaviour
         // Duplicate and position the hill
         
             Vector3 hillPosition = topFenceTilemap.transform.position;
-            GameObject newHill = Instantiate(hillTilemapPrefab, new Vector3(hillPosition.x - 4, hillPosition.y, hillPosition.z), Quaternion.identity);
+            GameObject newHill = Instantiate(hillTilemapPrefab, new Vector3(hillPosition.x - (landSize * 4), hillPosition.y, hillPosition.z), Quaternion.identity);
             newHill.transform.SetParent(Grid);
             newHill.name = "Hill (Duplicate)";
 
             foreach (GameObject boundary in boundaries)
             {
                 Vector3 boundaryPosition = boundary.transform.position;
-                GameObject newBoundary = Instantiate(boundary, new Vector3(boundaryPosition.x - 4, boundaryPosition.y, boundaryPosition.z), Quaternion.identity);
+                GameObject newBoundary = Instantiate(boundary, new Vector3(boundaryPosition.x - (landSize * 4), boundaryPosition.y, boundaryPosition.z), Quaternion.identity);
             }
               Vector3 leftBoundaryPosition = leftBoundary.transform.position;
             leftBoundary.transform.position = new Vector3(leftBoundaryPosition.x - 4, leftBoundaryPosition.y, leftBoundaryPosition.z);
