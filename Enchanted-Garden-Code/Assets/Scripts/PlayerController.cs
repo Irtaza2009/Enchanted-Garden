@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Vector2 movement;
 
+    public Joystick joystick;
+
     public GameObject dialogBox;
     public TextMeshProUGUI dialogText;
 
@@ -31,6 +33,17 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         dialogBox.SetActive(false);
+
+        if (Input.touchSupported)
+        {
+            Debug.Log("Touch supported");
+            joystick.gameObject.SetActive(true);
+            
+        }
+        else
+        {
+            Debug.Log("Touch not supported");
+        }
 
     }
 
@@ -115,8 +128,40 @@ public class PlayerController : MonoBehaviour
 
     void ProcessInputs()
     {
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
+        if (Input.touchSupported)
+        {
+            float horizontal = joystick.Horizontal;
+            float vertical = joystick.Vertical;
+
+            // Determine which axis to prioritize
+            if (Mathf.Abs(horizontal) > Mathf.Abs(vertical))
+            {
+                movement.x = horizontal;
+                movement.y = 0; // Disable vertical movement
+            }
+            else
+            {
+                movement.x = 0; // Disable horizontal movement
+                movement.y = vertical;
+            }
+        }
+        else
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            // Determine which axis to prioritize
+            if (Mathf.Abs(horizontal) > Mathf.Abs(vertical))
+            {
+                movement.x = horizontal;
+                movement.y = 0; // Disable vertical movement
+            }
+            else
+            {
+                movement.x = 0; // Disable horizontal movement
+                movement.y = vertical;
+            }
+        }
     }
 
     void AnimateMovement()

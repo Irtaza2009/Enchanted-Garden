@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
 
     // TODO
+    // mobile controls for collecting water and planting/harvesting
     // joystick
     // workers
     // add variety of fruits
@@ -61,6 +62,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        
        
     }
 
