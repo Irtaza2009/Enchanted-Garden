@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using TMPro;
@@ -9,7 +10,10 @@ public class GameManager : MonoBehaviour
 {
 
     // TODO
-    // mobile controls for collecting water and planting/harvesting
+    // saving
+    // ore count
+    // selling
+    // menu scene
     // workers
     // add variety of fruits
     // add fairies flying randomly
@@ -39,6 +43,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI mushroomText;
      public TextMeshProUGUI buyLandText;
      public TextMeshProUGUI waterText;
+     public TextMeshProUGUI oreText;
 
       public string fruitType = "Wheat";
 
@@ -61,9 +66,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
-        
-       
+    void Start()
+    {
+        if (oreCount == 0) oreCount = 1000;
     }
 
     void Update()
@@ -87,6 +94,7 @@ public class GameManager : MonoBehaviour
         if (mushroomText != null) mushroomText.text = mushroomCount.ToString();
         if (waterText != null) waterText.text = waterCount.ToString();
         if (buyLandText != null) buyLandText.text = "Buy Land (" + landCost + " Ore)";
+        if (oreText != null) oreText.text = oreCount.ToString();
     }
 
      public void FruitSwitch()
@@ -165,6 +173,11 @@ public class GameManager : MonoBehaviour
         
 
 
+    }
+
+    public void LeaderboardButton()
+    {
+        SceneManager.LoadScene("Leaderboard");
     }
     
 }

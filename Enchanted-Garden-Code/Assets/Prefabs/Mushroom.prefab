@@ -54,6 +54,8 @@ MonoBehaviour:
   spawnRangeX: 11.5
   spawnRangeY: 3.5
   mushroomValue: 1
+  audioSource: {fileID: 0}
+  mushroomSFX: {fileID: 8300000, guid: 4614feb6f75fe4c6abd61b552fecb478, type: 3}
 --- !u!212 &7614019063315868616
 SpriteRenderer:
   m_ObjectHideFlags: 0

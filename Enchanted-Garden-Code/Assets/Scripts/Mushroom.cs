@@ -10,6 +10,8 @@ public class Mushroom : MonoBehaviour
     public float spawnRangeY = 3.5f; // Vertical spawn range
     public int mushroomValue = 1; // Number of mushrooms awarded per hit
 
+
+
     private SpriteRenderer spriteRenderer;
 
     void Start()
@@ -39,6 +41,7 @@ public class Mushroom : MonoBehaviour
             // Add mushrooms to the player's inventory
             GameManager.Instance.mushroomCount += mushroomValue;
             Debug.Log("Mushrooms: " + GameManager.Instance.mushroomCount);
+            AudioManager.instance.Play("Plant");
 
             // Optionally play a sound or animation here before destroying the object
             Destroy(gameObject);

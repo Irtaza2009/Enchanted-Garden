@@ -82,6 +82,7 @@ public class Plot : MonoBehaviour
         }
        
         yield return new WaitForSeconds(14f); // Wait for the animation to complete
+        AudioManager.instance.Play("Plant");
         isHarvestable = true;
         isWaterable = false;
         gameObject.tag = "Plot";
