@@ -9,8 +9,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
 
-    // TODO
-    // saving
+    // TODO:
     // selling
     // menu scene
     // workers
@@ -70,7 +69,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LoadGameData();
-        if (oreCount == 0) oreCount = 1000;
+        
     }
 
     void Update()
@@ -202,7 +201,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadGameData()
     {
-        oreCount = PlayerPrefs.GetInt("OreCount", 0);
+        oreCount = PlayerPrefs.GetInt("OreCount", 1000);
         fruitCount = PlayerPrefs.GetInt("FruitCount", 0);
         waterCount = PlayerPrefs.GetInt("WaterCount", 0);
         mushroomCount = PlayerPrefs.GetInt("MushroomCount", 0);

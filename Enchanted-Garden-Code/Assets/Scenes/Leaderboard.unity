@@ -9863,7 +9863,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter username...
+  m_text: Enter your name...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7a5ac4e62ba954893a4cbaec20ec3a38, type: 2}
   m_sharedMaterial: {fileID: 5203437974529906802, guid: 7a5ac4e62ba954893a4cbaec20ec3a38, type: 2}

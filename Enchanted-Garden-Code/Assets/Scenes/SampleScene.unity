@@ -1836,6 +1836,7 @@ MonoBehaviour:
   mushroomText: {fileID: 2084620448}
   buyLandText: {fileID: 1618162204}
   waterText: {fileID: 776570844}
+  oreText: {fileID: 1953922002}
   fruitType: Fruit
   wheatButton: {fileID: 0}
   fruitButton: {fileID: 0}
@@ -59897,7 +59898,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 22
+  m_fontSizeMin: 15
   m_fontSizeMax: 50
   m_fontStyle: 0
   m_HorizontalAlignment: 1
