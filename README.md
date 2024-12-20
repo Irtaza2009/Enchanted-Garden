@@ -4,11 +4,11 @@ Enchanted Garden is an engaging and charming farming simulation game where playe
 
 ### Play at: https://irtaza.xyz/Enchanted-Garden
 
-[Main scene at daytime](https://cloud-37196u5lz-hack-club-bot.vercel.app/1mainday.png)
+![Main scene at daytime](https://cloud-37196u5lz-hack-club-bot.vercel.app/1mainday.png)
 
-<!-- # [Main scene at night](https://cloud-37196u5lz-hack-club-bot.vercel.app/0mainnight.png) -->
+<!-- # ![Main scene at night](https://cloud-37196u5lz-hack-club-bot.vercel.app/0mainnight.png) -->
 
-[Garden](https://cloud-9gsf8b0m4-hack-club-bot.vercel.app/0garden.png)
+![Garden](https://cloud-9gsf8b0m4-hack-club-bot.vercel.app/0garden.png)
 
 ---
 
