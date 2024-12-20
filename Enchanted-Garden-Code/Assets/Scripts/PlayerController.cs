@@ -152,23 +152,23 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.touchSupported)
         {
-            float horizontal = joystick.Horizontal;
-            float vertical = joystick.Vertical;
+            float horizontalJ = joystick.Horizontal;
+            float verticalJ = joystick.Vertical;
 
             // Determine which axis to prioritize
-            if (Mathf.Abs(horizontal) > Mathf.Abs(vertical))
+            if (Mathf.Abs(horizontalJ) > Mathf.Abs(verticalJ))
             {
-                movement.x = horizontal;
+                movement.x = horizontalJ;
                 movement.y = 0; // Disable vertical movement
             }
             else
             {
                 movement.x = 0; // Disable horizontal movement
-                movement.y = vertical;
+                movement.y = verticalJ;
             }
         }
-        else
-        {
+        
+        
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
                 movement.x = 0; // Disable horizontal movement
                 movement.y = vertical;
             }
-        }
+        
     }
 
     void AnimateMovement()
