@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
 
     // TODO
     // saving
-    // ore count
     // selling
     // menu scene
     // workers
@@ -70,6 +69,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        LoadGameData();
         if (oreCount == 0) oreCount = 1000;
     }
 
@@ -80,12 +80,14 @@ public class GameManager : MonoBehaviour
     public void CollectFruit()
     {
         fruitCount++;
+        SaveGameData();
 
     }
 
     public void CollectWater()
     {
         waterCount++;
+        SaveGameData();
     }
 
     void UpdateUI()
@@ -111,6 +113,7 @@ public class GameManager : MonoBehaviour
             wheatButton.interactable = false;  // Disable the button to indicate it's selected
             fruitButton.interactable = true;   // Enable the other button
         }
+        SaveGameData();
     }
 
     public bool WaterPlant()
@@ -118,9 +121,12 @@ public class GameManager : MonoBehaviour
         if (waterCount > 0)
         {
             waterCount--;
+            SaveGameData();
             return true;
+            
         }
         return false;
+        
     }
 
     public void BuyLand()
@@ -133,6 +139,7 @@ public class GameManager : MonoBehaviour
             ExpandLength();
             landSize++;
         }
+        SaveGameData();
     }
 
     public void ExpandLength()
@@ -177,7 +184,31 @@ public class GameManager : MonoBehaviour
 
     public void LeaderboardButton()
     {
+        SaveGameData();
         SceneManager.LoadScene("Leaderboard");
+    }
+
+    public void SaveGameData()
+    {
+        PlayerPrefs.SetInt("OreCount", oreCount);
+        PlayerPrefs.SetInt("FruitCount", fruitCount);
+        PlayerPrefs.SetInt("WaterCount", waterCount);
+        PlayerPrefs.SetInt("MushroomCount", mushroomCount);
+        PlayerPrefs.SetInt("LandCost", landCost);
+        PlayerPrefs.SetInt("LandSize", landSize);
+        PlayerPrefs.SetString("FruitType", fruitType);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadGameData()
+    {
+        oreCount = PlayerPrefs.GetInt("OreCount", 0);
+        fruitCount = PlayerPrefs.GetInt("FruitCount", 0);
+        waterCount = PlayerPrefs.GetInt("WaterCount", 0);
+        mushroomCount = PlayerPrefs.GetInt("MushroomCount", 0);
+        landCost = PlayerPrefs.GetInt("LandCost", 10);
+        landSize = PlayerPrefs.GetInt("LandSize", 1);
+        fruitType = PlayerPrefs.GetString("FruitType", "Wheat");
     }
     
 }
