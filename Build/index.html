@@ -6,7 +6,7 @@
     <title>Unity WebGL Player | Enchanted-Garden-Code</title>
   </head>
   <body style="text-align: center">
-    <canvas id="unity-canvas" width=960 height=600 style="width: 960px; height: 600px; background: url('Build/Build.jpg.br') center / cover"></canvas>
+    <canvas id="unity-canvas" width=960 height=600 style="width: 960px; height: 600px; background: url('Build/Build.jpg') center / cover"></canvas>
     <script src="Build/Build.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -18,9 +18,9 @@
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/Build.data.br",
-        frameworkUrl: "Build/Build.framework.js.br",
-        codeUrl: "Build/Build.wasm.br",
+        dataUrl: "Build/Build.data",
+        frameworkUrl: "Build/Build.framework.js",
+        codeUrl: "Build/Build.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Enchanted Garden",
         productName: "Enchanted-Garden-Code",
