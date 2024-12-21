@@ -330,7 +330,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 dialogText.text = isTouchDevice 
-                    ? "Switch to harvesting/planting by tapping the button or pressing 1s" 
+                    ? "Switch to harvesting/planting by tapping the button or pressing 1" 
                     : "Switch to harvesting/planting by pressing 1";
             }
         }
