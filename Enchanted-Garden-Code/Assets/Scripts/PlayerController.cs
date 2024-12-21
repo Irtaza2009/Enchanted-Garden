@@ -324,13 +324,13 @@ public class PlayerController : MonoBehaviour
             if (playerState == "Harvesting")
             {
                 dialogText.text = isTouchDevice 
-                    ? "Tap the button to plant or harvest" 
+                    ? "Tap the button or Press Enter to plant or harvest" 
                     : "Press Enter to plant or harvest";
             }
             else
             {
                 dialogText.text = isTouchDevice 
-                    ? "Switch to harvesting/planting by tapping the button" 
+                    ? "Switch to harvesting/planting by tapping the button or pressing 1s" 
                     : "Switch to harvesting/planting by pressing 1";
             }
         }
@@ -339,20 +339,20 @@ public class PlayerController : MonoBehaviour
             if (playerState == "Watering")
             {
                 dialogText.text = isTouchDevice 
-                    ? "Tap the button to water the plant" 
+                    ? "Tap the button or Press Enter to water the plant" 
                     : "Press Enter to water the plant";
             }
             else
             {
                 dialogText.text = isTouchDevice 
-                    ? "Switch to watering by tapping the button" 
+                    ? "Switch to watering by tapping the button or pressing 2" 
                     : "Switch to watering by pressing 2";
             }
         }
         else if (spotTag == "ElixirSpot")
         {
             dialogText.text = isTouchDevice 
-                ? "Tap the button to collect the elixir" 
+                ? "Tap the button or Press Enter to collect the elixir" 
                 : "Press Enter to collect the elixir";
         }
     }

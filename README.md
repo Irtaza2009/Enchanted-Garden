@@ -27,9 +27,7 @@ Enchanted Garden is an engaging and charming farming simulation game where playe
 
 ---
 
-## Getting Started
-
-### Prerequisites
+## Playing the Game
 
 To play or develop Enchanted Garden, ensure you have the following installed:
 

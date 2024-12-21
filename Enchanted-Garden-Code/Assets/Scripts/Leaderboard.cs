@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using Dan.Main;
 
@@ -37,6 +38,11 @@ public class Leaderboard : MonoBehaviour
         LeaderboardCreator.UploadNewEntry(publicLeaderboardKey, username, score, ((msg) => {
             GetLeaderboard();
         }));
+    }
+
+    public void ReturnButton()
+    {
+        SceneManager.LoadScene(0);
     }
 
 
