@@ -82,6 +82,11 @@ Contributions are welcome! If you have ideas for new features or improvements, f
 
 ---
 
+## Credits
+
+- Assets from [Cup Nooble](https://cupnooble.itch.io/sprout-lands-asset-pack)
+- Music from [pixabay](https://pixabay.com/music/)
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
